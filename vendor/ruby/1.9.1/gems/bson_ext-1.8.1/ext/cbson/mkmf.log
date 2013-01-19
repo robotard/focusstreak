@@ -1,0 +1,60 @@
+have_func: checking for asprintf()... -------------------- yes
+
+"gcc -o conftest -I/usr/include/x86_64-linux -I/usr/include/ruby/backward -I/usr/include -I.    -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -mtune=generic -fPIC conftest.c  -L. -L/usr/lib64 -L. -Wl,-z,relro -rdynamic -Wl,-export-dynamic  -m64   -lruby  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"gcc -o conftest -I/usr/include/x86_64-linux -I/usr/include/ruby/backward -I/usr/include -I.    -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -mtune=generic -fPIC conftest.c  -L. -L/usr/lib64 -L. -Wl,-z,relro -rdynamic -Wl,-export-dynamic  -m64   -lruby  -lpthread -lrt -ldl -lcrypt -lm   -lc"
+conftest.c: In function ‘t’:
+conftest.c:5:28: warning: variable ‘p’ set but not used [-Wunused-but-set-variable]
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: /*top*/
+4: int main() {return 0;}
+5: int t() { void ((*volatile p)()); p = (void ((*)()))asprintf; return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for ruby/st.h... -------------------- yes
+
+"gcc -E -I/usr/include/x86_64-linux -I/usr/include/ruby/backward -I/usr/include -I.    -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -mtune=generic -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <ruby/st.h>
+/* end */
+
+--------------------
+
+have_header: checking for ruby/regex.h... -------------------- yes
+
+"gcc -E -I/usr/include/x86_64-linux -I/usr/include/ruby/backward -I/usr/include -I.    -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -mtune=generic -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <ruby/regex.h>
+/* end */
+
+--------------------
+
+have_header: checking for ruby/encoding.h... -------------------- yes
+
+"gcc -E -I/usr/include/x86_64-linux -I/usr/include/ruby/backward -I/usr/include -I.    -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -mtune=generic -fPIC  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <ruby/encoding.h>
+/* end */
+
+--------------------
+
