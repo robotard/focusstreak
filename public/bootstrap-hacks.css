@@ -12,18 +12,16 @@ body {
 }
 
 .navbar .brand {
-    max-height: 40px;
-    overflow: visible;
     padding-bottom: 0;
-    padding-top: 0px;
 }
 .navbar-inner {
     border-bottom-width: 0px !important;
 }
 
-.brand img {
-  padding-top: 3px;
+.brand {
+  padding-top: 4px !important;
 }
+
 /* The white background content wrapper */
 .content {
   background-color: #fff;
