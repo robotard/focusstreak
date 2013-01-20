@@ -9,12 +9,9 @@ require 'rack/csrf'
 class MmUser
   include MongoMapper::Document
 
-  key :name, String
-  key :name_url, String ,:unique => true
+  key :nickname, String ,:unique => true
 
   validates_presence_of :email
-  validates_presence_of :name
-
 end
 
 
@@ -35,25 +32,9 @@ class Focusstreak < Sinatra::Base
     haml :signup
   end
 
-  get '/user/:name_url' do
-    @user = MmUser.find_by_name_url(params[:name_url])
+  get '/user/:nickname' do
+    @user = MmUser.find_by_nickname(params[:nickname])
     haml :show
-  end
-
-  def urlize_name(name)
-    name_url = name.to_url
-
-    if MmUser.find_by_name_url(name_url)
-      count = 1
-
-      while MmUser.find_by_name_url(name_url + count.to_s)
-        count += 1
-      end
-
-      name_url = name_url + count.to_s
-    end
-
-    return name_url
   end
 
   post '/signup' do
@@ -66,13 +47,6 @@ class Focusstreak < Sinatra::Base
       return haml :signup
     end
 
-    if user_params[:name].empty?
-      @email = user_params[:email]
-      @error = 'You must provide a Name'
-      return haml :signup
-    end
-
-    user_params[:name_url] = urlize_name(user_params[:name])
     @user = User.set(user_params)
 
     if @user.valid && @user.id
