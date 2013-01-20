@@ -29,6 +29,10 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/signup' do
+    if logged_in?
+      redirect '/'
+    end
+
     haml :signup
   end
 
