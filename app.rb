@@ -9,8 +9,6 @@ require 'rack/csrf'
 class MmUser
   include MongoMapper::Document
 
-  key :nickname, String ,:unique => true
-
   validates_presence_of :email
 end
 
@@ -45,7 +43,6 @@ class Focusstreak < Sinatra::Base
     user_params = params[:user]
 
     if not params.has_key?('tos')
-      @name = user_params[:name]
       @email = user_params[:email]
       @error = 'You must accept the Terms and Conditions'
       return haml :signup
@@ -62,22 +59,15 @@ class Focusstreak < Sinatra::Base
     end
   end
 
-  get '/settings/?:id?' do
+  get '/settings' do
     login_required
-    redirect '/' unless current_user.id.to_s == params[:id] || current_user.admin?
-
-    if params[:id]
-      @user = User.get(:id => params[:id])
-    else
-      @user = current_user
-    end
-
+    @user = current_user
     haml :settings
   end
 
-  post '/settings/?:id?' do
+  post '/settings' do
     login_required
-    redirect "/" unless current_user.admin? || current_user.id.to_s == params[:id]
+
     user = User.get(:id => params[:id])
     user_attributes = params[:user]
 
