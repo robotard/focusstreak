@@ -3,7 +3,7 @@ Bundler.require
 
 require './app'
 
-Focusstreak.set :project_name, 'Focusstreak'
+Focusstreak.set :project_name, 'Focus Streak'
 Focusstreak.set :google_analytics, ENV['GOOGLE_ANALYTICS']
 
 use Rack::Session::EncryptedCookie, :expire_after => 3600*24*60, :secret => ENV['COOKIE_SECRET']
