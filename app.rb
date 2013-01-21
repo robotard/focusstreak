@@ -1,9 +1,3 @@
-require 'rubygems'
-require 'sinatra'
-require 'sinatra/base'
-require 'mongo_mapper'
-require 'sinatra-authentication'
-require 'haml'
 require 'rack/csrf'
 
 class MmUser
@@ -14,7 +8,13 @@ end
 
 
 class Focusstreak < Sinatra::Base
+  register Sinatra::Synchrony
   set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + 'views/'
+
+  configure :development do
+    require "sinatra/reloader"
+    register Sinatra::Reloader
+  end
 
   get '/' do
     @users = User.all
@@ -84,5 +84,6 @@ class Focusstreak < Sinatra::Base
     end
   end
 
+  # Kept at the bottom so we can overwrite default routes
   register Sinatra::SinatraAuthentication
 end
