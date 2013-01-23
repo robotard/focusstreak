@@ -1,4 +1,5 @@
 %form{:action => "/settings", :method => "post"}
+  = Rack::Csrf.csrf_tag(env)
 
   %span.alert.alert-info{:style => 'display: inline-block;'}
     %h5 Change Password
