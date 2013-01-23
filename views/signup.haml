@@ -20,11 +20,15 @@
       %i(class='icon-key')
     %input.span2{:id => "user_password_confirmation", :name => "user[password_confirmation]", :placeholder => "Confirm Password", :type => "password"}
 
+  %br
+
   %label.checkbox{:style => 'margin-left: 3px;'}
     %input{:id => "tos", :name => 'tos', :type => 'checkbox', :value => ''}
     I agree to the
     %a{:href => '#tocModal', 'data-toggle' => 'modal'}
       Terms and Conditions
+
+  %br
 
   %button{:value => "Sign up", :class => 'btn-success btn', :type => "submit"}
     Sign up
