@@ -67,8 +67,17 @@ class Focusstreak < Sinatra::Base
   post '/settings' do
     login_required
 
-    user = User.get(:id => params[:id])
     user_attributes = params[:user]
+
+    password = params[:old_password]
+    salt = current_user.salt
+
+    if Digest::SHA1.hexdigest(password+salt) != current_user.hashed_password
+      @error = "'Current password' was incorrect"
+      return haml :settings
+    end
+
+    user = User.get(:id => params[:id])
 
     if params[:user][:password] == ""
         user_attributes.delete("password")
