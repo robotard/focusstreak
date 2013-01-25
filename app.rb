@@ -87,7 +87,7 @@ class Focusstreak < Sinatra::Base
     if user.update(user_attributes)
       redirect '/'
     else
-      @error = "There were some problems with your updates: #{user.errors}."
+      @error = "There were some problems with your settings: #{user.errors}."
       redirect "/settings/#{user.id}?"
     end
   end
