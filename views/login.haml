@@ -8,7 +8,7 @@
   .input-prepend
     %span(class='add-on')
       %i(class='icon-envelope')
-    %input{:id => "user_email", :name => "email", :placeholder => "E-Mail", :class => 'span2', :type => 'text'}
+    %input{:id => "user_email", :value => h(@email), :name => "email", :placeholder => "E-Mail", :class => 'span2', :type => 'text'}
 
   .input-prepend
     %span(class='add-on')

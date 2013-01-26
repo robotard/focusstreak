@@ -37,6 +37,23 @@ class Focusstreak < Sinatra::Base
     haml :login
   end
 
+  post '/login' do
+    if user = User.authenticate(params[:email], params[:password])
+      session[:user] = user.id
+
+      if session[:return_to]
+        redirect_url = session[:return_to]
+        session[:return_to] = false
+        redirect redirect_url
+      else
+        redirect '/'
+      end
+    else
+      @email = params[:email]
+      haml :login
+    end
+  end
+
   get '/signup' do
     if logged_in?
       redirect '/'
