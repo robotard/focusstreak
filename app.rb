@@ -72,24 +72,25 @@ class Focusstreak < Sinatra::Base
     password = params[:old_password]
     salt = current_user.salt
 
-    if Digest::SHA1.hexdigest(password+salt) != current_user.hashed_password
+    user_attributes = params[:user]
+
+    if user_attributes[:password] == ""
+      user_attributes.delete("password")
+      user_attributes.delete("password_confirmation")
+      user_attributes[:password] = params[:old_password]
+    end
+
+    user = current_user
+
+    if Digest::SHA1.hexdigest(password+salt) != user.hashed_password
       @error = "'Current password' was incorrect"
-      return haml :settings
-    end
-
-    user = User.get(:id => params[:id])
-
-    if params[:user][:password] == ""
-        user_attributes.delete("password")
-        user_attributes.delete("password_confirmation")
-    end
-
-    if user.update(user_attributes)
-      redirect '/'
+    elsif user.update(user_attributes)
+      @notice = "Settings updated."
     else
       @error = "There were some problems with your settings: #{user.errors}."
-      redirect "/settings/#{user.id}?"
     end
+
+    haml :settings
   end
 
   # Kept at the bottom so we can overwrite default routes

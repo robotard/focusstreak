@@ -1,5 +1,9 @@
 - if @error
-  = haml :error, :locals => {:error => @error}
+  = haml :alert, :locals => {:error => @error}
+
+- if @notice
+  = haml :alert, :locals => {:notice => @notice}
+
 
 %form{:action => "/settings", :method => "post"}
   = Rack::Csrf.csrf_tag(env)
@@ -17,6 +21,7 @@
       %input{:placeholder => "Confirm New Password", :id => "user_password_confirmation", :name => "user[password_confirmation]", :size => 30, :type => "password" }
 
   %hr
+
   %span.alert.alert-block{:style => 'display: inline-block; text-align:center;'}
     .input-append.input-prepend
       %span(class='add-on')
