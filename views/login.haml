@@ -1,5 +1,5 @@
 - if request.referer and request.referer.include? '/login'
-  = haml :error, :locals => {:error => "Incorrect email or password"}
+  = haml :alert, :locals => {:error => "Incorrect email or password"}
 
 %form{:action => "/login", :method => "post"}
 

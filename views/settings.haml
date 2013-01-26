@@ -1,10 +1,3 @@
-- if @error
-  = haml :alert, :locals => {:error => @error}
-
-- if @notice
-  = haml :alert, :locals => {:notice => @notice}
-
-
 %form{:action => "/settings", :method => "post"}
   = Rack::Csrf.csrf_tag(env)
 
@@ -27,6 +20,21 @@
       %span(class='add-on')
         %i(class='icon-key')
       %input{:placeholder => "Current Password", :id => "old_password", :name => "old_password", :size => 30, :type => "password" }
-    %button{:value => "Sign up", :class => 'btn-warning btn', :type => "submit", :style => 'margin: auto;'}
+    %button{:value => "Save Settings", :class => 'btn-warning btn', :type => "submit"}
       Apply Changes
       %i(class='loginbox-icon icon-wrench icon-large')
+
+%button{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal', :class => 'pull-right btn-danger btn'}
+  Delete Account
+  %i(class='loginbox-icon icon-trash icon-large')
+
+.modal.hide.fade{:id => 'confirm_delete', 'tabindex' => '-1', :role => 'dialog'}
+  .modal-header
+    %button.close{:type => 'button', 'data-dismiss' => 'modal'}
+      x
+    %h2 Sorry to see you go!
+  .modal-body
+    = haml :delete_account
+  .modal-footer
+    %button.btn{'data-dismiss' => 'modal'}
+      Close

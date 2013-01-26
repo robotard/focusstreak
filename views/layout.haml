@@ -68,4 +68,9 @@
             = @page_title
         .row
           .span10
+            - if @error
+              = haml :alert, :locals => {:error => @error}
+
+            - if @notice
+              = haml :alert, :locals => {:notice => @notice}
             =yield
