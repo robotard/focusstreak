@@ -1,5 +1,3 @@
-require 'rack/csrf'
-
 class DeleteReason
   include MongoMapper::Document
 
@@ -49,7 +47,7 @@ class Focusstreak < Sinatra::Base
         redirect '/'
       end
     else
-      @error = 'Wrong Email or Password'
+      flash[:error] = 'Wrong Email or Password'
       @email = params[:email]
       haml :login
     end
@@ -69,8 +67,8 @@ class Focusstreak < Sinatra::Base
   post '/forgot_password' do
     user = User.get(:email => params['email'])
     if user.nil?
-      @error = "'#{h(params[:email])}' does not have an account here."
-      haml :forgot_password
+      flash[:error] = "'#{h(params[:email])}' does not have an account here."
+      redirect '/forgot_password'
     else
       new_password = User.random_string(10).to_s
       user.update(:password => new_password)
@@ -98,7 +96,7 @@ class Focusstreak < Sinatra::Base
 
     if not params.has_key?('tos')
       @email = user_params[:email]
-      @error = 'You must accept the Terms and Conditions'
+      flash[:error] = 'You must accept the Terms and Conditions'
       return haml :signup
     end
 
@@ -109,7 +107,7 @@ class Focusstreak < Sinatra::Base
       redirect '/'
     else
       @email = user_params[:email]
-      @error =  "#{@user.errors}."
+      flash[:error] =  "#{@user.errors}."
       haml :signup
     end
   end
@@ -122,12 +120,11 @@ class Focusstreak < Sinatra::Base
 
   post '/delete_account' do
     login_required
-    @page_title = "Delete Account"
 
     if not User.authenticate(current_user.email, params[:password])
       @reason = params[:reason]
-      @error = "Incorrect Password"
-      return haml :delete_account
+      flash[:error] = "Incorrect Password"
+      redirect '/delete_account'
     end
 
     DeleteReason.create(:email => current_user.email,
@@ -165,11 +162,11 @@ class Focusstreak < Sinatra::Base
     user = current_user
 
     if not User.authenticate(user.email, password)
-      @error = "'Current password' was incorrect"
+      flash[:error] = "'Current password' was incorrect"
     elsif user.update(user_attributes)
-      @notice = "Settings updated."
+      flash[:notice] = "Settings updated."
     else
-      @error = "There were some problems with your settings: #{user.errors}."
+      flash[:error] = user.errors
     end
 
     haml :settings
