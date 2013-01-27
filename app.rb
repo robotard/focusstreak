@@ -49,6 +49,7 @@ class Focusstreak < Sinatra::Base
         redirect '/'
       end
     else
+      @error = 'Wrong Email or Password'
       @email = params[:email]
       haml :login
     end

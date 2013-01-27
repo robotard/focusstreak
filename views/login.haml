@@ -1,6 +1,3 @@
-- if request.referer and request.referer.include? '/login'
-  = haml :alert, :locals => {:error => "Incorrect email or password"}
-
 %form{:action => "/login", :method => "post"}
 
   = Rack::Csrf.csrf_tag(env)
