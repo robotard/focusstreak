@@ -70,16 +70,50 @@ class Focusstreak < Sinatra::Base
       flash[:error] = "'#{h(params[:email])}' does not have an account here."
       redirect '/forgot_password'
     else
-      new_password = User.random_string(10).to_s
-      user.update(:password => new_password)
+      secret = User.random_string(20)
+      user.set(:secret => secret)
       send_email(user.email,
-                 'New Password',
-                 "Your new password is: #{new_password} \n" \
-                 "You may change it at: http://#{request.host}/settings")
+                 "Password Reset",
+                 "You may reset your password here: http://#{request.host}/reset_password/#{secret}")
 
       @page_title = "Login"
-      @notice = "A New Password has been sent to #{user.email}"
-      haml :login
+      flash[:notice] = "Check your email! Instructions have been sent to #{user.email}"
+      redirect '/'
+    end
+  end
+
+  get '/reset_password/:secret' do
+    if not User.get(:secret => params[:secret])
+      flash[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
+      redirect '/'
+    else
+      @page_title = "Reset Password"
+      haml :reset_password
+    end
+  end
+
+  post '/reset_password' do
+    user = User.get(:secret => params[:secret])
+    if user.nil?
+      flash[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
+      redirect '/'
+    end
+
+    password = params[:password]
+    confirmation = params[:confirmation]
+
+    if password.empty?
+      flash[:error] = "Password may not be blank"
+      redirect back
+    elsif password != confirmation
+      flash[:error] = "Password does not match confirmation"
+      redirect back
+    else
+      flash[:notice] = "Password has now been changed."
+      user.set(:hashed_password => User.encrypt(password, user.salt))
+      session[:user] = user.id
+      user.set(:secret => nil)
+      redirect '/'
     end
   end
 
