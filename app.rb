@@ -55,6 +55,36 @@ class Focusstreak < Sinatra::Base
     end
   end
 
+  get '/forgot_password' do
+    @page_title = "Forgot Password"
+    haml :forgot_password
+  end
+
+  def send_email(to, subject, body)
+      Pony.mail(:to => to,
+                :subject => "[#{settings.project_name}] #{subject}",
+                :body => body)
+  end
+
+  post '/forgot_password' do
+    user = User.get(:email => params['email'])
+    if user.nil?
+      @error = "'#{h(params[:email])}' does not have an account here."
+      haml :forgot_password
+    else
+      new_password = User.random_string(10).to_s
+      user.update(:password => new_password)
+      send_email(user.email,
+                 'New Password',
+                 "Your new password is: #{new_password} \n" \
+                 "You may change it at: http://#{request.host}/settings")
+
+      @page_title = "Login"
+      @notice = "A New Password has been sent to #{user.email}"
+      haml :login
+    end
+  end
+
   get '/signup' do
     if logged_in?
       redirect '/'
