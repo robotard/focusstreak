@@ -20,13 +20,39 @@ end
 class Focusstreak < Sinatra::Base
   set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + 'views/'
 
+  register Rack::OAuth2::Sinatra
+
+  oauth.database = Mongo::Connection.new(ENV['DATABASE_HOST'], ENV['DATABASE_PORT'])[ENV['DATABASE']]
+  oauth.database.authenticate(ENV['DATABASE_USER'], ENV['DATABASE_PASSWORD'])
+
+  oauth.authenticator = lambda do |email, password|
+    user = User.get(:email => email)
+    user.id.to_s if user && User.authenticate(email, password)
+  end
+
   configure :development do
     require "sinatra/reloader"
     register Sinatra::Reloader
   end
 
+  get "/oauth/authorize" do
+    if not current_user.guest?
+      haml :oauth_authorize
+    else
+      session[:return_to] = "/oauth/authorize?authorization=#{oauth.authorization}"
+      redirect "/login?authorization=#{oauth.authorization}"
+    end
+  end
+
+  post "/oauth/grant" do
+    oauth.grant! "Superman"
+  end
+
+  post "/oauth/deny" do
+    oauth.deny!
+  end
+
   get '/' do
-    @users = User.all
     @page_title = 'Home'
     haml :index
   end
@@ -204,6 +230,11 @@ class Focusstreak < Sinatra::Base
     end
 
     haml :settings
+  end
+
+  oauth_required "/api/hello"
+  get "/api/hello" do
+    "Authenticated? %s" % oauth.authenticated?
   end
 
   # Kept at the bottom so we can overwrite default routes

@@ -1,0 +1,16 @@
+%h2
+  = "The application #{oauth.client.display_name} #{oauth.client.link}"
+  = "is requesting to #{oauth.scope.to_sentence}  your account."
+
+%form{:action => "/oauth/grant", :method => "post"}
+  = Rack::Csrf.csrf_tag(env)
+  %button
+    Grant
+  %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
+
+%form{:action => "/oauth/deny", :method => "post"}
+  = Rack::Csrf.csrf_tag(env)
+  %button
+    Deny
+  %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
+

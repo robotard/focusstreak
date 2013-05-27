@@ -4,7 +4,7 @@
 
 :javascript
   var _gaq = _gaq || [];
-  = "_gaq.push(['_setAccount', '#{settings.google_analytics}']);"
+  _gaq.push(['_setAccount', '#{settings.google_analytics}']);
   _gaq.push(['_trackPageview']);
 
   (function() {
