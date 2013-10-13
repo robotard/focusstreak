@@ -9,6 +9,19 @@ class DeleteReason
   timestamps!
 end
 
+class Streak
+  include MongoMapper::Document
+
+  key :name, String, :required => true
+  key :info, String, :required => true
+  key :duration, String, :required => true
+  key :timestamp, Time, :required => true
+  timestamps!
+
+  def to_s
+    "#{name} - #{info} - for #{duration} at #{timestamp}"
+  end
+end
 
 class MmUser
   include MongoMapper::Document
@@ -22,15 +35,18 @@ class Focusstreak < Sinatra::Base
 
   register Rack::OAuth2::Sinatra
 
-  oauth.database = Mongo::Connection.new(ENV['DATABASE_HOST'], ENV['DATABASE_PORT'])[ENV['DATABASE']]
+  oauth.database = Mongo::Connection.new(ENV['DATABASE_HOST'], ENV['DATABASE_PORT'])[ENV['DATABASE'] + "_#{Sinatra::Base.environment}"]
   oauth.database.authenticate(ENV['DATABASE_USER'], ENV['DATABASE_PASSWORD'])
+  oauth.collection_prefix = 'oauth'
 
   oauth.authenticator = lambda do |email, password|
     user = User.get(:email => email)
     user.id.to_s if user && User.authenticate(email, password)
   end
 
-  configure :development do
+  oauth_required "/api/*"
+
+  if settings.development?
     require "sinatra/reloader"
     register Sinatra::Reloader
   end
@@ -232,9 +248,17 @@ class Focusstreak < Sinatra::Base
     haml :settings
   end
 
-  oauth_required "/api/hello"
-  get "/api/hello" do
-    "Authenticated? %s" % oauth.authenticated?
+  post "/api/streaks/add" do
+    content_type :json
+    streak = Streak.new(:name => "nametest",
+                        :info => "info goes here",
+                        :duration => "duration goes here",
+                        :timestamp => Time.now)
+    if streak.save()
+        return { :error => false }.to_json
+    else
+        return { :error => streak.errors }.to_json
+    end
   end
 
   # Kept at the bottom so we can overwrite default routes

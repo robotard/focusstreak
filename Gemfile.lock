@@ -1,21 +1,21 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.11)
-      activesupport (= 3.2.11)
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
       builder (~> 3.0.0)
-    activesupport (3.2.11)
-      i18n (~> 0.6)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
-    addressable (2.2.8)
-    backports (2.7.0)
-    bson (1.8.1)
-    bson_ext (1.8.1)
-      bson (~> 1.8.1)
+    addressable (2.3.5)
+    backports (3.3.5)
+    bson (1.9.2)
+    bson_ext (1.9.2)
+      bson (~> 1.9.2)
     builder (3.0.4)
     daemons (1.1.9)
-    dm-core (1.2.0)
-      addressable (~> 2.2.6)
+    dm-core (1.2.1)
+      addressable (~> 2.3)
     dm-migrations (1.2.0)
       dm-core (~> 1.2.0)
     dm-timestamps (1.2.0)
@@ -23,33 +23,35 @@ GEM
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
     encrypted_cookie (0.0.4)
-    eventmachine (1.0.0)
-    haml (3.1.7)
-    i18n (0.6.1)
-    json (1.7.6)
-    jwt (0.1.5)
-      multi_json (>= 1.0)
-    mail (2.5.3)
-      i18n (>= 0.4.0)
+    eventmachine (1.0.3)
+    haml (4.0.3)
+      tilt
+    i18n (0.6.5)
+    iconv (1.0.3)
+    json (1.8.0)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.19)
-    mongo (1.8.1)
-      bson (~> 1.8.1)
+    mime-types (1.25)
+    minitest (5.0.8)
+    mongo (1.9.2)
+      bson (~> 1.9.2)
     mongo_mapper (0.12.0)
       activemodel (~> 3.0)
       activesupport (~> 3.0)
       plucky (~> 0.5.2)
-    multi_json (1.5.0)
+    multi_json (1.8.1)
     plucky (0.5.2)
       mongo (~> 1.5)
     polyglot (0.3.3)
-    pony (1.4)
-      mail (> 2.0)
-    rack (1.4.3)
+    pony (1.5.1)
+      mail (>= 2.0)
+    rack (1.5.2)
     rack-flash (0.1.2)
       rack
-    rack-flash3 (1.0.3)
+    rack-flash3 (1.0.5)
       rack
     rack-oauth2-server (2.8.0)
       bson_ext
@@ -58,17 +60,17 @@ GEM
       mongo (~> 1)
       rack (~> 1.1)
       sinatra (~> 1.1)
-    rack-protection (1.3.2)
+    rack-protection (1.5.0)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rack_csrf (2.4.0)
       rack (>= 0.9)
     rufus-tokyo (1.0.7)
-    sinatra (1.3.3)
-      rack (~> 1.3, >= 1.3.6)
-      rack-protection (~> 1.2)
-      tilt (~> 1.3, >= 1.3.3)
+    sinatra (1.4.3)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     sinatra-authentication (0.4.1)
       dm-core
       dm-migrations
@@ -78,21 +80,21 @@ GEM
       rufus-tokyo
       sinatra
       sinbook
-    sinatra-contrib (1.3.2)
+    sinatra-contrib (1.4.1)
       backports (>= 2.0)
-      eventmachine
+      multi_json
       rack-protection
       rack-test
-      sinatra (~> 1.3.0)
+      sinatra (~> 1.4.0)
       tilt (~> 1.3)
     sinbook (0.1.9)
       yajl-ruby
-    thin (1.5.0)
+    thin (1.6.0)
       daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
-    tilt (1.3.3)
-    treetop (1.4.12)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.5.0)
+    tilt (1.4.1)
+    treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     yajl-ruby (1.1.0)
@@ -104,11 +106,14 @@ DEPENDENCIES
   bson_ext
   encrypted_cookie
   haml
+  iconv
+  minitest
   mongo_mapper
   pony
   rack
   rack-flash3
   rack-oauth2-server
+  rack-test
   rack_csrf
   sinatra
   sinatra-authentication
