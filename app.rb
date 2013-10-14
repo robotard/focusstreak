@@ -250,10 +250,10 @@ class Focusstreak < Sinatra::Base
 
   post "/api/streaks/add" do
     content_type :json
-    streak = Streak.new(:name => "nametest",
-                        :info => "info goes here",
-                        :duration => "duration goes here",
-                        :timestamp => Time.now)
+    streak = Streak.new(:name => params[:name],
+                        :info => params[:info],
+                        :duration => params[:duration],
+                        :timestamp => params[:timestamp])
     if streak.save()
         return { :error => false }.to_json
     else

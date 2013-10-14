@@ -32,13 +32,31 @@ class FocusstreakTest < Minitest::Test
         @access_token = JSON.parse(last_response.body)['access_token']
         header "Authorization", "OAuth #{@access_token}"
     end
+
+    Streak.delete_all
   end
 
 
   def test_api_streak_add
-    post '/api/streaks/add'
+    expected = Streak.new(:name => "test name",
+                          :info => "test info",
+                          :duration => 123,
+                          :timestamp => Time.now())
+
+    post '/api/streaks/add', :name => expected.name,
+                             :info => expected.info,
+                             :duration => expected.duration,
+                             :timestamp => expected.timestamp
+
     assert last_response.ok?
-    puts Streak.all[0]
-    assert_equal 'TBD', last_response.body
+
+    expected_body = {:error => false}
+    assert_equal expected_body.to_json, last_response.body
+
+    streak = Streak.first
+    # FIXME: Copy paste & not comparing timestamps!
+    assert_equal expected.name, streak.name
+    assert_equal expected.info, streak.info
+    assert_equal expected.duration, streak.duration
   end
 end
