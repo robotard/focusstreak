@@ -71,6 +71,11 @@ class FocusstreakTest < Minitest::Test
 
     result = JSON.parse(last_response.body)
     assert_equal_streaks(expected, result)
+
+    get "/api/streaks/foobarbaz"
+    refute last_response.ok?
+    expected = {:error => "Streak not found"}
+    assert_equal expected.to_json, last_response.body
   end
 
   def test_api_streaks_add
@@ -90,6 +95,18 @@ class FocusstreakTest < Minitest::Test
     assert_equal expected_body.to_json, last_response.body
 
     streak = Streak.first
-    assert_equal_streaks(expected, streak)
+    assert_equal expected.name, streak.name
+    assert_equal expected.info, streak.info
+    assert_equal expected.duration, streak.duration
+    assert_equal expected.timestamp.to_s, streak.timestamp.to_s
+
+    post '/api/streaks/add', :name => expected.name,
+                             :duration => expected.duration,
+                             :timestamp => expected.timestamp
+
+    refute last_response.ok?
+    expected = {:error => {:info => ["can't be blank"]}}
+    assert_equal expected.to_json, last_response.body
+    assert_equal 1, Streak.all.length
   end
 end

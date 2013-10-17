@@ -249,7 +249,13 @@ class Focusstreak < Sinatra::Base
   end
 
   get "/api/streaks/:id" do
-    json Streak.find(params[:id])
+    streak = Streak.find(params[:id])
+    if streak
+      json streak
+    else
+      status 404
+      json :error => "Streak not found"
+    end
   end
 
   get "/api/streaks" do
@@ -264,6 +270,7 @@ class Focusstreak < Sinatra::Base
     if streak.save()
       json :error => false
     else
+      status 400
       json :error => streak.errors
     end
   end
