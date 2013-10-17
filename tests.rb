@@ -36,6 +36,13 @@ class FocusstreakTest < Minitest::Test
     Streak.delete_all
   end
 
+  def assert_equal_streaks(expected, actual)
+    assert_equal expected.name, actual['name']
+    assert_equal expected.info, actual['info']
+    assert_equal expected.duration, actual['duration']
+    assert_equal expected.timestamp.to_s, Time.parse(actual['timestamp']).to_s
+  end
+
   def test_api_streaks_list
     get '/api/streaks'
     assert last_response.ok?
@@ -43,17 +50,27 @@ class FocusstreakTest < Minitest::Test
     assert_equal expected_body.to_json, last_response.body
 
     expected = Streak.create(:name => "test name",
-                          :info => "test info",
-                          :duration => 123,
-                          :timestamp => Time.now())
+                             :info => "test info",
+                             :duration => 123,
+                             :timestamp => Time.now())
 
     get '/api/streaks'
     assert last_response.ok?
     result = JSON.parse(last_response.body).first
-    assert_equal expected.name, result['name']
-    assert_equal expected.info, result['info']
-    assert_equal expected.duration, result['duration']
-    assert_equal expected.timestamp.to_s, Time.parse(result['timestamp']).to_s
+    assert_equal_streaks(expected, result)
+  end
+
+  def test_api_streaks_get
+    expected = Streak.create(:name => "test name",
+                             :info => "test info",
+                             :duration => 123,
+                             :timestamp => Time.now())
+
+    get "/api/streaks/#{expected.id}"
+    assert last_response.ok?
+
+    result = JSON.parse(last_response.body)
+    assert_equal_streaks(expected, result)
   end
 
   def test_api_streaks_add
@@ -73,10 +90,6 @@ class FocusstreakTest < Minitest::Test
     assert_equal expected_body.to_json, last_response.body
 
     streak = Streak.first
-    # FIXME: Copy paste & not comparing timestamps!
-    assert_equal expected.name, streak.name
-    assert_equal expected.info, streak.info
-    assert_equal expected.duration, streak.duration
-    assert_equal expected.timestamp.to_s, streak.timestamp.to_s
+    assert_equal_streaks(expected, streak)
   end
 end

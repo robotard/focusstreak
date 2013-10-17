@@ -248,6 +248,10 @@ class Focusstreak < Sinatra::Base
     haml :settings
   end
 
+  get "/api/streaks/:id" do
+    json Streak.find(params[:id])
+  end
+
   get "/api/streaks" do
     json Streak.all
   end
