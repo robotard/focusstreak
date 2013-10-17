@@ -248,15 +248,19 @@ class Focusstreak < Sinatra::Base
     haml :settings
   end
 
+  get "/api/streaks" do
+    json Streak.all
+  end
+
   post "/api/streaks/add" do
     streak = Streak.new(:name => params[:name],
                         :info => params[:info],
                         :duration => params[:duration],
                         :timestamp => params[:timestamp])
     if streak.save()
-        json :error => false
+      json :error => false
     else
-        json :error => streak.errors
+      json :error => streak.errors
     end
   end
 

@@ -37,10 +37,23 @@ class FocusstreakTest < Minitest::Test
   end
 
   def test_api_streaks_list
-    get '/api/streaks '
+    get '/api/streaks'
     assert last_response.ok?
     expected_body = []
     assert_equal expected_body.to_json, last_response.body
+
+    expected = Streak.create(:name => "test name",
+                          :info => "test info",
+                          :duration => 123,
+                          :timestamp => Time.now())
+
+    get '/api/streaks'
+    assert last_response.ok?
+    result = JSON.parse(last_response.body).first
+    assert_equal expected.name, result['name']
+    assert_equal expected.info, result['info']
+    assert_equal expected.duration, result['duration']
+    assert_equal expected.timestamp.to_s, Time.parse(result['timestamp']).to_s
   end
 
   def test_api_streaks_add
@@ -64,5 +77,6 @@ class FocusstreakTest < Minitest::Test
     assert_equal expected.name, streak.name
     assert_equal expected.info, streak.info
     assert_equal expected.duration, streak.duration
+    assert_equal expected.timestamp.to_s, streak.timestamp.to_s
   end
 end
