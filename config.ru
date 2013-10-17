@@ -9,6 +9,7 @@ require './app'
 Focusstreak.set :project_name, 'Focus Streak'
 Focusstreak.set :google_analytics, ENV['GOOGLE_ANALYTICS']
 
+use Rack::Deflater
 use Rack::Session::EncryptedCookie, :expire_after => 3600*24*60, :secret => ENV['COOKIE_SECRET']
 use Rack::Csrf, :raise => true, :skip => ['POST:/oauth/.*', 'POST:/api/.*']
 use Rack::Flash, :sweep => true
