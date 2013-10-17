@@ -36,8 +36,14 @@ class FocusstreakTest < Minitest::Test
     Streak.delete_all
   end
 
+  def test_api_streaks_list
+    get '/api/streaks '
+    assert last_response.ok?
+    expected_body = []
+    assert_equal expected_body.to_json, last_response.body
+  end
 
-  def test_api_streak_add
+  def test_api_streaks_add
     expected = Streak.new(:name => "test name",
                           :info => "test info",
                           :duration => 123,
