@@ -89,7 +89,7 @@ class Focusstreak < Sinatra::Base
         redirect '/'
       end
     else
-      flash[:error] = 'Wrong Email or Password'
+      flash.now[:error] = 'Wrong Email or Password'
       @email = params[:email]
       haml :login
     end
@@ -109,7 +109,7 @@ class Focusstreak < Sinatra::Base
   post '/forgot_password' do
     user = User.get(:email => params['email'])
     if user.nil?
-      flash[:error] = "'#{h(params[:email])}' does not have an account here."
+      flash.now[:error] = "'#{h(params[:email])}' does not have an account here."
       redirect '/forgot_password'
     else
       secret = User.random_string(20)
@@ -119,14 +119,14 @@ class Focusstreak < Sinatra::Base
                  "You may reset your password here: http://#{request.host}/reset_password/#{secret}")
 
       @page_title = "Login"
-      flash[:notice] = "Check your email! Instructions have been sent to #{user.email}"
+      flash.now[:notice] = "Check your email! Instructions have been sent to #{user.email}"
       redirect '/'
     end
   end
 
   get '/reset_password/:secret' do
     if not User.get(:secret => params[:secret])
-      flash[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
+      flash.now[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
       redirect '/'
     else
       @page_title = "Reset Password"
@@ -137,7 +137,7 @@ class Focusstreak < Sinatra::Base
   post '/reset_password' do
     user = User.get(:secret => params[:secret])
     if user.nil?
-      flash[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
+      flash.now[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
       redirect '/'
     end
 
@@ -145,13 +145,13 @@ class Focusstreak < Sinatra::Base
     confirmation = params[:confirmation]
 
     if password.empty?
-      flash[:error] = "Password may not be blank"
+      flash.now[:error] = "Password may not be blank"
       redirect back
     elsif password != confirmation
-      flash[:error] = "Password does not match confirmation"
+      flashnow[:error] = "Password does not match confirmation"
       redirect back
     else
-      flash[:notice] = "Password has now been changed."
+      flash.now[:notice] = "Password has now been changed."
       user.set(:hashed_password => User.encrypt(password, user.salt))
       session[:user] = user.id
       user.set(:secret => nil)
@@ -172,7 +172,7 @@ class Focusstreak < Sinatra::Base
 
     if not params.has_key?('tos')
       @email = user_params[:email]
-      flash[:error] = 'You must accept the Terms and Conditions'
+      flash.now[:error] = 'You must accept the Terms and Conditions'
       return haml :signup
     end
 
@@ -180,10 +180,10 @@ class Focusstreak < Sinatra::Base
 
     if @user.valid && @user.id
       session[:user] = @user.id
-      redirect '/'
+      redirect '/', :must_revalidate
     else
       @email = user_params[:email]
-      flash[:error] =  "#{@user.errors}."
+      flash.now[:error] =  "#{@user.errors}."
       haml :signup
     end
   end
@@ -199,7 +199,7 @@ class Focusstreak < Sinatra::Base
 
     if not User.authenticate(current_user.email, params[:password])
       @reason = params[:reason]
-      flash[:error] = "Incorrect Password"
+      flash.now[:error] = "Incorrect Password"
       redirect '/delete_account'
     end
 
@@ -221,6 +221,7 @@ class Focusstreak < Sinatra::Base
 
   post '/settings' do
     login_required
+    @user = current_user
 
     user_attributes = params[:user]
 
@@ -235,14 +236,12 @@ class Focusstreak < Sinatra::Base
       user_attributes[:password] = params[:old_password]
     end
 
-    user = current_user
-
-    if not User.authenticate(user.email, password)
-      flash[:error] = "'Current password' was incorrect"
-    elsif user.update(user_attributes)
-      flash[:notice] = "Settings updated."
+    if not User.authenticate(@user.email, password)
+      flash.now[:error] = "'Current password' was incorrect"
+    elsif @user.update(user_attributes)
+      flash.now[:notice] = "Settings updated."
     else
-      flash[:error] = user.errors
+      flash.now[:error] = @user.errors
     end
 
     haml :settings
