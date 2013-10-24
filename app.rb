@@ -9,8 +9,17 @@ class DeleteReason
   timestamps!
 end
 
-class Streak
+class MmUser
   include MongoMapper::Document
+  many :streaks
+
+  validates_presence_of :email
+end
+
+
+class Streak
+  include MongoMapper::EmbeddedDocument
+  embedded_in :MmUser
 
   key :name, String, :required => true
   key :info, String, :required => true
@@ -23,12 +32,17 @@ class Streak
   end
 end
 
-class MmUser
-  include MongoMapper::Document
-
-  validates_presence_of :email
+module Rack
+  module OAuth2
+    class Server
+      alias_method :original, :respond_with_access_token
+      def respond_with_access_token(request, logger)
+        raise UnsupportedGrantType unless ['password', 'token'].include? request.POST["grant_type"]
+        original(request, logger)
+      end
+    end
+  end
 end
-
 
 class Focusstreak < Sinatra::Base
   set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + 'views/'
@@ -51,6 +65,7 @@ class Focusstreak < Sinatra::Base
     register Sinatra::Reloader
   end
 
+
   get "/oauth/authorize" do
     if not current_user.guest?
       haml :oauth_authorize
@@ -61,7 +76,7 @@ class Focusstreak < Sinatra::Base
   end
 
   post "/oauth/grant" do
-    oauth.grant! "Superman"
+    head oauth.grant!(current_user.id)
   end
 
   post "/oauth/deny" do
@@ -70,7 +85,11 @@ class Focusstreak < Sinatra::Base
 
   get '/' do
     @page_title = 'Home'
-    haml :index
+    if logged_in?
+      redirect '/me'
+    else
+      haml :index
+    end
   end
 
   get '/login' do
@@ -213,6 +232,13 @@ class Focusstreak < Sinatra::Base
     redirect '/'
   end
 
+  get '/me' do
+    login_required
+    user_id = current_user.id
+    @streaks = current_user.streaks
+    haml :me
+  end
+
   get '/settings' do
     login_required
     @user = current_user
@@ -248,7 +274,7 @@ class Focusstreak < Sinatra::Base
   end
 
   get "/api/streaks/:id" do
-    streak = Streak.find(params[:id])
+    streak = current_oauth_user.streaks.find(params[:id])
     if streak
       json streak
     else
@@ -258,15 +284,17 @@ class Focusstreak < Sinatra::Base
   end
 
   get "/api/streaks" do
-    json Streak.all
+    json current_oauth_user.streaks
   end
 
-  post "/api/streaks/add" do
+  post "/api/streaks" do
     streak = Streak.new(:name => params[:name],
                         :info => params[:info],
                         :duration => params[:duration],
                         :timestamp => params[:timestamp])
-    if streak.save()
+
+    user = current_oauth_user
+    if streak.valid? and user.streaks << streak and user.save
       json :error => false
     else
       status 400
@@ -274,6 +302,9 @@ class Focusstreak < Sinatra::Base
     end
   end
 
+  def current_oauth_user
+    User.get(:id => oauth.identity)
+  end
   # Kept at the bottom so we can overwrite default routes
   register Sinatra::SinatraAuthentication
 

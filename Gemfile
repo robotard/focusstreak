@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'mongo_mapper'
+gem 'mongo_mapper', '0.13.0.beta2'
 gem 'sinatra-authentication'
 gem 'bson_ext'
 gem 'encrypted_cookie'
