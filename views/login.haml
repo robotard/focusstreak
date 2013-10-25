@@ -4,19 +4,19 @@
 
   .input-prepend
     %span(class='add-on')
-      %i(class='icon-envelope')
+      %i(class='fa fa-envelope')
     %input{:id => "user_email", :value => h(@email), :name => "email", :placeholder => "E-Mail", :class => 'span2', :type => 'text'}
 
   .input-prepend
     %span(class='add-on')
-      %i(class='icon-key')
+      %i(class='fa fa-key')
     %input{:id => "user_password", :name => "password", :placeholder => "Password", :class => 'span2', :type => "password"}
 
   %br
 
   %button{:value => "Login", :class => 'btn btn-info', :type => "submit"}
     Login
-    %i(class='loginbox-icon icon-arrow-right icon-large')
+    %i(class='loginbox-icon fa fa-arrow-right icon-large')
 
 %br
 %a{:href => '/forgot_password'}

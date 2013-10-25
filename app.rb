@@ -164,17 +164,17 @@ class Focusstreak < Sinatra::Base
     confirmation = params[:confirmation]
 
     if password.empty?
-      flash.now[:error] = "Password may not be blank"
+      flash[:error] = "Password may not be blank"
       redirect back
     elsif password != confirmation
-      flashnow[:error] = "Password does not match confirmation"
+      flash[:error] = "Password does not match confirmation"
       redirect back
     else
-      flash.now[:notice] = "Password has now been changed."
+      flash[:notice] = "Password has now been changed."
       user.set(:hashed_password => User.encrypt(password, user.salt))
       session[:user] = user.id
       user.set(:secret => nil)
-      redirect '/'
+      redirect '/me'
     end
   end
 

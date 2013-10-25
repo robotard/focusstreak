@@ -8,12 +8,12 @@
     %h5 Change Password
     .input-prepend
       %span(class='add-on')
-        %i(class='icon-key')
+        %i(class='fa fa-key')
       %input{:placeholder => "New Password", :id => "user_password", :name => "user[password]", :size => 30, :type => "password" }
 
     .input-prepend
       %span(class='add-on')
-        %i(class='icon-key')
+        %i(class='fa fa-key')
       %input{:placeholder => "Confirm New Password", :id => "user_password_confirmation", :name => "user[password_confirmation]", :size => 30, :type => "password" }
 
   %hr
@@ -21,15 +21,15 @@
   %span.alert.alert-block{:style => 'display: inline-block; text-align:center;'}
     .input-append.input-prepend
       %span(class='add-on')
-        %i(class='icon-key')
+        %i(class='fa fa-key')
       %input{:placeholder => "Current Password", :id => "old_password", :name => "old_password", :size => 30, :type => "password" }
     %button{:value => "Save Settings", :class => 'btn-warning btn', :type => "submit"}
       Apply Changes
-      %i(class='loginbox-icon icon-wrench icon-large')
+      %i(class='loginbox-icon fa fa-wrench icon-large')
 
 %button{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal', :class => 'pull-right btn-danger btn'}
   Delete Account
-  %i(class='loginbox-icon icon-trash icon-large')
+  %i(class='loginbox-icon fa fa-trash-o icon-large')
 
 .modal.hide.fade{:id => 'confirm_delete', 'tabindex' => '-1', :role => 'dialog'}
   .modal-header

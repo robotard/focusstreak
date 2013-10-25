@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/maxjustus/sinatra-authentication.git
+  revision: cb919a7cc01631924d7b830bab41f85f54a7305d
+  branch: master
+  specs:
+    sinatra-authentication (0.4.2)
+      dm-core
+      dm-migrations
+      dm-timestamps
+      dm-validations
+      rack-flash3
+      rufus-tokyo
+      sinatra
+      sinbook
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -54,8 +69,6 @@ GEM
     pony (1.5.1)
       mail (>= 2.0)
     rack (1.5.2)
-    rack-flash (0.1.2)
-      rack
     rack-flash3 (1.0.5)
       rack
     rack-oauth2-server (2.8.0)
@@ -65,26 +78,17 @@ GEM
       mongo (~> 1)
       rack (~> 1.1)
       sinatra (~> 1.1)
-    rack-protection (1.5.0)
+    rack-protection (1.5.1)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rack_csrf (2.4.0)
       rack (>= 0.9)
     rufus-tokyo (1.0.7)
-    sinatra (1.4.3)
+    sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    sinatra-authentication (0.4.1)
-      dm-core
-      dm-migrations
-      dm-timestamps
-      dm-validations
-      rack-flash
-      rufus-tokyo
-      sinatra
-      sinbook
     sinatra-contrib (1.4.1)
       backports (>= 2.0)
       multi_json
@@ -124,6 +128,6 @@ DEPENDENCIES
   rack-test
   rack_csrf
   sinatra
-  sinatra-authentication
+  sinatra-authentication!
   sinatra-contrib
   thin
