@@ -2,22 +2,21 @@
 
   = Rack::Csrf.csrf_tag(env)
 
-  .input-prepend
+  .input-prepend.input-block-level
     %span(class='add-on')
       %i(class='fa fa-envelope')
     %input{:id => "user_email", :value => h(@email), :name => "email", :placeholder => "E-Mail", :class => 'span2', :type => 'text'}
 
-  .input-prepend
+  .input-prepend.input-block-level
     %span(class='add-on')
       %i(class='fa fa-key')
     %input{:id => "user_password", :name => "password", :placeholder => "Password", :class => 'span2', :type => "password"}
 
-  %br
 
   %button{:value => "Login", :class => 'btn btn-info', :type => "submit"}
     Login
     %i(class='loginbox-icon fa fa-arrow-right icon-large')
 
-%br
+%hr
 %a{:href => '/forgot_password'}
   I forgot my password.
