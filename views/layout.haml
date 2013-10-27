@@ -51,15 +51,13 @@
               %a{:href => "/login", :value => "Login", :class => 'btn btn-info', :disabled => request.path_info == '/login'}
                 Login
                 %i(class='loginbox-icon fa fa-lock icon-large')
-    .container
+    .container.text-center
       .content
         .page-header
           %h1
             = @page_title
-        .row
-          .span10
-            = haml :alert
-            = yield
+        = haml :alert
+        = yield
     %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'}
     %script{:type => 'text/javascript', :src => '/bootstrap/js/bootstrap.js'}
 

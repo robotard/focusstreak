@@ -4,8 +4,7 @@ html, body {
 }
 
 body {
-  padding-top: 60px; /* 40px to make the container go all the way to the bottom of the topbar */
-  padding-bottom: 40px;
+  padding-top: 60px;
 }
 .container > footer p {
   text-align: center; /* center align it with the container */
@@ -19,7 +18,6 @@ body {
 /* The white background content wrapper */
 .content {
   background-color: #fff;
-  padding: 20px;
   border: 2px solid #e5e5e5;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
@@ -27,10 +25,16 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
           box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  padding-bottom: 35px;
+}
+
+.checkbox input[type="checkbox"] {
+  float: none !important;
 }
 
 .input-group {
   padding-top: 4px;
+  margin: 0 auto;
   width: 300px;
 }
 
@@ -46,6 +50,13 @@ body {
     margin-top: 8px !important;
   }
 }
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}
 
 .navbar-buttons > a{
   margin-top: 8px;
@@ -55,10 +66,6 @@ body {
   padding-right: 14px;
 }
 
-.content {
-  min-height: 500px;
-}
-
 :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder, ::-webkit-input-placeholder {
   font-family: Raleway, sans-serif;
 }
@@ -66,7 +73,6 @@ body {
 html * {
   font-family: Raleway, sans-serif;
 }
-
 
 .loginbox-icon {
   padding-left: 5px;

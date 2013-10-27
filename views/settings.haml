@@ -28,9 +28,10 @@
       Apply Changes
       %i(class='loginbox-icon fa fa-wrench icon-large')
 
-%button{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal', :class => 'pull-right btn-danger btn'}
-  Delete Account
-  %i(class='loginbox-icon fa fa-trash-o icon-large')
+.pull-right
+  %button{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal', :class => 'btn-danger btn'}
+    Delete Account
+    %i(class='loginbox-icon fa fa-trash-o icon-large')
 
 .modal.fade{:id => 'confirm_delete', 'tabindex' => '-1', :role => 'dialog'}
   .modal-dialog
