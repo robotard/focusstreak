@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '2.0.0'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'mongo_mapper', '0.13.0.beta2'
