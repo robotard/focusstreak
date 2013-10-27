@@ -1,7 +1,6 @@
 Bugs:
 Don't say if a user exists!
 Don't hide buttons when on their pages (signup/settings) - just disable them!
-Don't allow blank password at signup
 
 Public API brainstorm:
 
