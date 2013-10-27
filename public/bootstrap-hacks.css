@@ -11,15 +11,9 @@ body {
   text-align: center; /* center align it with the container */
 }
 
-.navbar .brand {
-    padding-bottom: 0;
-}
-.navbar-inner {
-    border-bottom-width: 0px !important;
-}
-
-.brand {
-  padding-top: 4px !important;
+.navbar-brand {
+    padding-bottom: 0px;
+    padding-top: 10px !important;
 }
 
 /* The white background content wrapper */
@@ -33,6 +27,28 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
           box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.input-group {
+  padding-top: 4px;
+  width: 300px;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+  .navbar-buttons > a {
+    width: 95%;
+    text-align: center;
+    display: block !important;
+    margin: 0 auto;
+    margin-top: 8px !important;
+  }
+}
+
+.navbar-buttons > a{
+  margin-top: 8px;
 }
 
 .alert {
@@ -51,12 +67,6 @@ html * {
   font-family: Raleway, sans-serif;
 }
 
-.btn
-{
-  -webkit-border-radius: 6px !important;
-  -moz-border-radius: 6px !important;
-  border-radius: 3px !important;
-}
 
 .loginbox-icon {
   padding-left: 5px;

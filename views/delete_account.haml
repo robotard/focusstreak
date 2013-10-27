@@ -5,18 +5,19 @@
   %br
   Would you please tell us why?
   %br
-  %textarea{'rows' => '3', :name => 'reason', :id => 'reason', :placeholder => "I'm deleting my account because..."}
+  %textarea.form-control{'rows' => '3', :name => 'reason', :id => 'reason', :placeholder => "I'm deleting my account because..."}
     = h(@reason)
   %br
-  .alert.alert-block{:style => 'display: inline-block; text-align:center;'}
+  .alert.alert-danger{:style => 'display: inline-block; text-align:center;'}
     %b{:style => 'color: red;'}
       Deleting your account is permanent and cannot be undone!
     %br
     %br
-    .input-append.input-prepend.input-block-level
-      %span(class='add-on')
+    .input-group
+      %span.input-group-addon
         %i(class='fa fa-key')
-      %input{:placeholder => "Current Password", :id => "password", :name => "password", :size => 30, :type => "password" }
+      %input.form-control{:placeholder => "Current Password", :id => "password", :name => "password", :size => 30, :type => "password" }
+    %br
     %button{:value => "Delete Account", :class => 'btn-danger btn', :type => "submit"}
       Delete My Account
       %i(class='loginbox-icon fa fa-trash-o icon-large')

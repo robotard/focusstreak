@@ -2,16 +2,17 @@
 
   = Rack::Csrf.csrf_tag(env)
 
-  .input-prepend.input-block-level
-    %span(class='add-on')
+  .input-group
+    %span.input-group-addon
       %i(class='fa fa-envelope')
-    %input{:id => "user_email", :value => h(@email), :name => "email", :placeholder => "E-Mail", :class => 'span2', :type => 'text'}
+    %input.form-control{:id => "user_email", :value => h(@email), :name => "email", :placeholder => "E-Mail", :type => 'text'}
 
-  .input-prepend.input-block-level
-    %span(class='add-on')
+  .input-group
+    %span.input-group-addon
       %i(class='fa fa-key')
-    %input{:id => "user_password", :name => "password", :placeholder => "Password", :class => 'span2', :type => "password"}
+    %input.form-control{:id => "user_password", :name => "password", :placeholder => "Password", :type => "password"}
 
+  <br>
 
   %button{:value => "Login", :class => 'btn btn-info', :type => "submit"}
     Login

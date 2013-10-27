@@ -11,56 +11,48 @@
       \-
       = settings.project_name
 
-    %script{:type => "text/javascript", :src  => 'http://www.google.com/jsapi'}
-
-    :javascript
-      google.load("jquery", "1.7.1");
 
     %link{"rel" => "stylesheet", "href" => "http://fonts.googleapis.com/css?family=Raleway:400", "type" => "text/css"}
-    %link{"rel" => "stylesheet", "href" => "/bootstrap/css/bootstrap.min.css", "type" => "text/css"}
+    %link{"rel" => "stylesheet", "href" => "/bootstrap/css/bootstrap.css", "type" => "text/css"}
     %link{"rel" => "stylesheet", "href" => "/bootstrap-hacks.css", "type" => "text/css"}
-    %link{"rel" => "stylesheet", "href" => "/bootstrap/css/bootstrap-responsive.min.css", "type" => "text/css"}
-    %script{:type => "text/javascript", :src  => "/bootstrap/js/bootstrap.min.js"}
-
     %link{"rel" => "stylesheet", "href" => "/font-awesome-4.0.0/css/font-awesome.min.css", "type" => "text/css"}
 
   %body
     = haml :analytics
 
     .navbar.navbar-inverse.navbar-fixed-top
-      .navbar-inner
-        .container
-          %a{:class =>'btn btn-navbar', 'data-toggle' => 'collapse', 'data-target' => '.nav-collapse'}
+      .container
+        .navbar-header
+          %button{:type => 'button', :class =>'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse'}
             %span{:class => 'icon-bar'}
             %span{:class => 'icon-bar'}
             %span{:class => 'icon-bar'}
 
-          %a.brand{:href=> '/'}
+          %a.navbar-brand{:href=> '/'}
             %img{:src => '/images/logo.png'}
             = settings.project_name
-          .nav-collapse.collapse
-            %ul.nav
-              %li{:class=>'active'}
-                %a{:href=>'/'} Home
+        .navbar-collapse.collapse
+          -# %ul.nav.navbar-nav
+          -#  %li{:class=>'active'}
+          -#    %a{:href=>'/'} Home
 
-            .pull-right
-              - if logged_in?
-                - if request.path_info != '/settings'
-                  %a{:href => "/settings", :value => "Settings", :class => 'btn btn-warning'}
-                    Settings
-                    %i(class='loginbox-icon fa fa-cogs icon-large')
-                %a{:href => "/logout", :value => "Logout", :class => 'btn btn-danger'}
-                  Logout
-                  %i(class='loginbox-icon fa fa-unlock icon-large')
-              - else
-                - if request.path_info != '/signup'
-                  %a{:href => "/signup", :value => "Join, it's free!", :class => 'btn btn-success'}
-                    Sign up, it's free!
-                    %i(class='loginbox-icon fa fa-bolt icon-large')
-                - if request.path_info != '/login'
-                  %a{:href => "/login", :value => "Login", :class => 'btn btn-info'}
-                    Login
-                    %i(class='loginbox-icon fa fa-lock icon-large')
+          .navbar-right.navbar-nav.nav.navbar-buttons
+            - if logged_in?
+              %a{:type => "button", :href => "/settings", :value => "Settings", :class => 'btn btn-warning'}
+                Settings
+                %i(class='loginbox-icon fa fa-cogs icon-large')
+              %a{:href => "/logout", :value => "Logout", :class => 'btn btn-danger'}
+                Logout
+                %i(class='loginbox-icon fa fa-unlock icon-large')
+            - else
+              - if request.path_info != '/signup'
+                %a{:href => "/signup", :value => "Join, it's free!", :class => 'btn btn-success'}
+                  Sign up, it's free!
+                  %i(class='loginbox-icon fa fa-bolt icon-large')
+              - if request.path_info != '/login'
+                %a{:href => "/login", :value => "Login", :class => 'btn btn-info'}
+                  Login
+                  %i(class='loginbox-icon fa fa-lock icon-large')
     .container
       .content
         .page-header
@@ -69,4 +61,8 @@
         .row
           .span10
             = haml :alert
-            =yield
+            = yield
+    %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'}
+    %script{:type => 'text/javascript', :src => '/bootstrap/js/bootstrap.js'}
+
+

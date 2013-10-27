@@ -128,7 +128,7 @@ class Focusstreak < Sinatra::Base
   post '/forgot_password' do
     user = User.get(:email => params['email'])
     if user.nil?
-      flash.now[:error] = "'#{h(params[:email])}' does not have an account here."
+      flash[:error] = "'#{h(params[:email])}' does not have an account here."
       redirect '/forgot_password'
     else
       secret = User.random_string(20)
@@ -138,7 +138,7 @@ class Focusstreak < Sinatra::Base
                  "You may reset your password here: http://#{request.host}/reset_password/#{secret}")
 
       @page_title = "Login"
-      flash.now[:notice] = "Check your email! Instructions have been sent to #{user.email}"
+      flash[:notice] = "Check your email! Instructions have been sent to #{user.email}"
       redirect '/'
     end
   end
