@@ -126,6 +126,11 @@ class Focusstreak < Sinatra::Base
   end
 
   post '/forgot_password' do
+    if params[:email].empty?
+      flash[:error] = "Please enter an email address"
+      redirect '/forgot_password'
+    end
+
     user = User.get(:email => params['email'])
     if user.nil?
       flash[:error] = "'#{h(params[:email])}' does not have an account here."
