@@ -223,7 +223,7 @@ class Focusstreak < Sinatra::Base
 
     if not User.authenticate(current_user.email, params[:password])
       @reason = params[:reason]
-      flash.now[:error] = "Incorrect Password"
+      flash[:error] = "Incorrect Password"
       redirect '/delete_account'
     end
 

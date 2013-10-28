@@ -6,16 +6,36 @@ html, body {
 body {
   padding-top: 60px;
 }
+
 .container > footer p {
   text-align: center; /* center align it with the container */
 }
 
 .navbar-brand {
-    padding-bottom: 0px;
-    padding-top: 10px !important;
+  position: absolute;
+  z-index: 9;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.navbar-brand a {
+  position: relative;
+  top: -20px;
+  color: #999999;
+  font-size: 36px;
 }
 
-/* The white background content wrapper */
+.navbar-brand a:hover,
+.navbar-brand a:focus {
+  text-decoration: none;
+  color: #ffffff
+}
+
+.navbar-brand img {
+  position: relative;
+  top: 23px;
+  padding-bottom: 0px !important;
+}
+
 .content {
   background-color: #fff;
   border: 2px solid #e5e5e5;
@@ -35,7 +55,11 @@ body {
 .input-group {
   padding-top: 4px;
   margin: 0 auto;
-  width: 300px;
+  max-width: 300px;
+}
+
+.content-container {
+  max-width: 600px;
 }
 
 @media (max-width: 768px) {
@@ -48,6 +72,14 @@ body {
     display: block !important;
     margin: 0 auto;
     margin-top: 8px !important;
+  }
+
+  .navbar-brand a {
+    top: 6px;
+  }
+  .navbar-brand img {
+    max-width: 45px !important;
+    top: -3px;
   }
 }
 .center {
