@@ -307,9 +307,56 @@ class Focusstreak < Sinatra::Base
     end
   end
 
+  get '/admin' do
+    admin_required
+    @clients = Rack::OAuth2::Server::Client.all
+    haml :admin
+  end
+
+  get '/oauth/clients/delete/:id' do
+    admin_required
+    begin
+      Rack::OAuth2::Server::Client.delete(params[:id])
+    rescue Exception => e
+      flash[:error] = "Failed to delete client: #{e.to_s}"
+    end
+    redirect :admin
+  end
+
+  post '/oauth/clients' do
+    admin_required
+
+    begin
+      if Rack::OAuth2::Server::Client.lookup(params[:name])
+        raise Exception, "There is already a client named '#{params[:name]}'"
+      end
+
+      client = Rack::OAuth2::Server.register(:display_name => params[:name],
+                                             :link => params[:link],
+                                             :image_url => params[:image_link],
+                                             :scope => %{read write},
+                                             :redirect_uri => params[:redirect_uri],
+                                             :authorization_types => ['password'])
+
+      flash[:success] = "Registered the OAauth client: #{params[:name]}"
+    rescue Exception => e
+      flash[:error] = e.to_s
+    end
+
+    redirect :admin
+  end
+
   def current_oauth_user
     User.get(:id => oauth.identity)
   end
+
+  def admin_required
+    login_required
+    if not current_user.admin?
+      redirect '/'
+    end
+  end
+
   # Kept at the bottom so we can overwrite default routes
   register Sinatra::SinatraAuthentication
 

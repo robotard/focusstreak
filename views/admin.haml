@@ -1,0 +1,59 @@
+%h3
+  OAuth Clients:
+
+- for client in @clients
+  %h4
+    = client.display_name
+    %a{:href => "/oauth/clients/delete/#{client.id}"}
+      [delete]
+      
+  ID: 
+  = client.id
+  %br
+  Secret: 
+  = client.secret
+  %br
+  Link: 
+  = client.link
+  %br
+  Redirect URI: 
+  = client.redirect_uri
+  %br
+  Image URL: 
+  = client.image_url
+  %br
+%hr
+
+%h3
+  New OAuth Client
+%form{:action => "/oauth/clients", :method => "post"}
+
+  = Rack::Csrf.csrf_tag(env)
+
+  .input-group
+    %span.input-group-addon
+      %i(class='fa fa-comment-o')
+    %input.form-control{:id => "client_name", :name => "name", :placeholder => "Name", :type => 'text'}
+
+  .input-group
+    %span.input-group-addon
+      %i(class='fa fa-external-link')
+    %input.form-control{:id => "client_link", :name => "link", :placeholder => "Link", :type => "text"}
+
+  .input-group
+    %span.input-group-addon
+      %i(class='fa fa-eye')
+    %input.form-control{:id => "client_image_url", :name => "image_url", :placeholder => "Image URL", :type => "text"}
+
+  .input-group
+    %span.input-group-addon
+      %i(class='fa fa-reply')
+    %input.form-control{:id => "client_redirect_uri", :name => "redirect_uri", :placeholder => "Redirect URI", :type => "text"}
+
+  <br>
+
+  %button{:value => "Create Client", :class => 'btn btn-info', :type => "submit"}
+    Create Client
+    %i(class='loginbox-icon fa fa-save icon-large')
+
+%hr
