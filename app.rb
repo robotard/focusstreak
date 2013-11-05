@@ -76,7 +76,7 @@ class Focusstreak < Sinatra::Base
   end
 
   post "/oauth/grant" do
-    head oauth.grant!(current_user.id)
+    oauth.grant!(current_user.id)
   end
 
   post "/oauth/deny" do
@@ -333,10 +333,11 @@ class Focusstreak < Sinatra::Base
 
       client = Rack::OAuth2::Server.register(:display_name => params[:name],
                                              :link => params[:link],
-                                             :image_url => params[:image_link],
+                                             :image_url => params[:image_url],
                                              :scope => %{read write},
                                              :redirect_uri => params[:redirect_uri],
                                              :authorization_types => ['password'])
+
 
       flash[:success] = "Registered the OAauth client: #{params[:name]}"
     rescue Exception => e
