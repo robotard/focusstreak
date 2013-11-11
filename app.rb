@@ -22,12 +22,12 @@ class Streak
 
   key :name, String, :required => true
   key :info, String, :required => true
-  key :duration, String, :required => true
+  key :duration, Integer, :required => true
   key :timestamp, Time, :required => true
   timestamps!
 
   def to_s
-    "#{name} - #{info} - for #{duration} at #{timestamp}"
+    "#{name} - #{info} - for #{duration} seconds at #{timestamp}"
   end
 end
 
