@@ -1,22 +1,2 @@
-Bugs:
-
-
-Public API brainstorm:
-
-A distraction is something that broke your focus. It contains the following fields:
-  name: What broke your streak? Chrome, Firefox, Meeting, etc
-  info: How did the distraction break your streak? URL, etc
-  duration: Length in minutes that you were focusing before it was broken
-  timestamp: When did the distraction occur?
-
-
-POST /api/streaks/new
-Params:
-  distraction
-  timestamp
-Returns:
-  URL to that streak
-
-GET /api/streaks/(best|last)
-Returns:
-  distraction
+TODO:
+* Streaks should consist of start_timestamp and stop_timestamp; not duration. (that's calculated on the server)

@@ -97,11 +97,22 @@ class FocusstreakTest < Minitest::Unit::TestCase
     user.streaks
   end
 
+  def test_api_encouragement
+    get '/api/encouragement', :name => "test name",
+                              :info => "test info",
+                              :duration => 123,
+                              :timestamp => Time.now
+
+    assert last_response.ok?
+    expected = "<H1>You're doing swell, don't give up now...</H1>"
+    assert_equal expected, last_response.body
+  end
+
   def test_api_streaks_new
     expected = Streak.new(:name => "test name",
                           :info => "test info",
                           :duration => 123,
-                          :timestamp => Time.now())
+                          :timestamp => Time.now)
 
     post '/api/streaks', :name => expected.name,
                          :info => expected.info,

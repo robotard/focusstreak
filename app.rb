@@ -16,7 +16,6 @@ class MmUser
   validates_presence_of :email
 end
 
-
 class Streak
   include MongoMapper::EmbeddedDocument
   embedded_in :MmUser
@@ -239,8 +238,7 @@ class Focusstreak < Sinatra::Base
 
   get '/me' do
     login_required
-    user_id = current_user.id
-    @streaks = current_user.streaks
+    @streaks = current_user.streaks.sort_by(&:duration).reverse
     haml :me
   end
 
@@ -286,6 +284,10 @@ class Focusstreak < Sinatra::Base
       status 404
       json :error => "Streak not found"
     end
+  end
+
+  get "/api/encouragement" do
+    "<H1>You're doing swell, don't give up now...</H1>"
   end
 
   get "/api/streaks" do

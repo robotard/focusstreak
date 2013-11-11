@@ -5,10 +5,12 @@ require 'rack/csrf'
 require 'rack-flash'
 
 require './app'
+require './stripcookies'
 
 Focusstreak.set :project_name, 'Focus Streak'
 Focusstreak.set :google_analytics, ENV['GOOGLE_ANALYTICS']
 
+use Rack::StripCookiesFromAPICalls
 use Rack::Deflater
 use Rack::Session::EncryptedCookie, :expire_after => 3600*24*60, :secret => ENV['COOKIE_SECRET']
 use Rack::Csrf, :raise => true, :skip => ['POST:/oauth/.*', 'POST:/api/.*']
