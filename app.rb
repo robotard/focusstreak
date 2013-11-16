@@ -66,7 +66,7 @@ class Focusstreak < Sinatra::Base
 
 
   get "/oauth/authorize" do
-    if not current_user.guest?
+    if logged_in?
       haml :oauth_authorize
     else
       session[:return_to] = "/oauth/authorize?authorization=#{oauth.authorization}"

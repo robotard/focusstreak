@@ -1,2 +1,3 @@
 TODO:
-* Streaks should consist of start_timestamp and stop_timestamp; not duration. (that's calculated on the server)
+* Streaks should just log stop time and duration.
+* OAuth signup button should be visible
