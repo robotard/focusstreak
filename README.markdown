@@ -1,7 +1,7 @@
 Focus Streak is alpha quality software
 ======================================
 
-Focus Streak is a service & set of tools meant to improve ones ability to cut out distractions and improve focus.
+Focus Streak is a service & set of tools meant to improve ones ability to focus and cut out distractions.
 Techies are quite familiar with the cost of context-switching, and it's about time we do something about it.
 
 The Focus Streak service (this repo) is the API for which different Focus Streak compatible clients can interface.
