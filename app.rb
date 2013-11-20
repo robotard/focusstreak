@@ -276,6 +276,10 @@ class Focusstreak < Sinatra::Base
     haml :settings
   end
 
+  get "/api/email" do
+    return current_oauth_user.email
+  end
+
   get "/api/streaks/:id" do
     streak = current_oauth_user.streaks.find(params[:id])
     if streak

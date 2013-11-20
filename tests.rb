@@ -34,8 +34,8 @@ class FocusstreakTest < Minitest::Unit::TestCase
 
         post '/oauth/access_token', {:client_secret => client.secret, :client_id => client._id, :grant_type => 'password', :username => "test@test.com", :password => "test"}
         @access_token = JSON.parse(last_response.body)['access_token']
-        header "Authorization", "OAuth #{@access_token}"
     end
+    header "Authorization", "OAuth #{@access_token}"
   end
 
   def assert_equal_streaks(expected, actual)
@@ -43,6 +43,17 @@ class FocusstreakTest < Minitest::Unit::TestCase
     assert_equal expected.info, actual['info']
     assert_equal expected.duration, actual['duration']
     assert_equal expected.timestamp.to_s, Time.parse(actual['timestamp']).to_s
+  end
+
+  def test_api_email
+    get '/api/email'
+    assert last_response.ok?
+    assert_equal "test@test.com", last_response.body
+
+    header "Authorization", "OAuth 0123456789"
+    get '/api/email'
+    refute last_response.ok?
+    assert_equal "The access token is no longer valid.", last_response.body
   end
 
   def test_api_streaks_list
