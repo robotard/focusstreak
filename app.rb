@@ -83,6 +83,14 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/' do
+    if logged_in?
+      redirect '/me'
+    else
+      send_file 'public/landing.html'
+    end
+  end
+
+  get '/beta' do
     @page_title = 'Home'
     if logged_in?
       redirect '/me'
