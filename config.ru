@@ -1,11 +1,15 @@
 require 'bundler'
 Bundler.require
 
+require 'dotenv'
+Dotenv.load
+
 require 'rack/csrf'
 require 'rack-flash'
 
 require './app'
 require './stripcookies'
+
 
 Focusstreak.set :project_name, 'Focus Streak'
 Focusstreak.set :google_analytics, ENV['GOOGLE_ANALYTICS']
