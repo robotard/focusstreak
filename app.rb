@@ -100,7 +100,11 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/login' do
-    haml :login
+    if logged_in?
+      redirect '/me'
+    else
+      haml :login
+    end
   end
 
   post '/login' do
