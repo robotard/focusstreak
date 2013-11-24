@@ -1,6 +1,16 @@
-%h4
-  The streaks should be listed here
+- if @no_apps_installed
+  = haml :install_app
+- else
+  %h3
+    - if @streaks.empty?
+      You haven't logged any streaks yet.
+      %br
+      %h4
+        %br
+        Keep on surfing, and come back later :-)
+    - else
+      Streaks
 
-- for streak in @streaks
-  = streak
-  %br
+  - for streak in @streaks
+    = streak
+    %br

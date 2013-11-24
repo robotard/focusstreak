@@ -250,6 +250,7 @@ class Focusstreak < Sinatra::Base
 
   get '/me' do
     login_required
+    @no_apps_installed = Rack::OAuth2::Server::AccessToken.from_identity(current_user.id).empty?
     @streaks = current_user.streaks.sort_by(&:duration).reverse
     haml :me
   end
