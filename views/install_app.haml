@@ -1,9 +1,37 @@
-%a{:target => '_blank', :href => 'https://chrome.google.com/webstore/detail/focus-streak/mpifekaiabpalokkgbkeejmfofpohfdn'}
+%div{:id => 'installer'}
+  %a{:onclick => 'install_plugin()', :href => '#'}
+    %h3
+      Click to install our free Google Chrome™ extension.
+      %br
+    %img{:src => '/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'}
+%div{:id => 'progress'}
   %h3
-    Click to install our free Google Chrome™ extension.
-    %br
-  %img{:src => '/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'}
+    %font{:color => 'green'}
+      %i{:class => 'fa fa-check'}
+      Extension installed!
+
 %br
 %br
+
 %h4
   Your personalized data will appear on this page once you've set up the extension and logged your first streak.
+
+:javascript
+
+  function set_installer_visibility() {
+    var installer = document.getElementById('installer');
+    var progress = document.getElementById('progress');
+    if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
+      installer.style.display = 'none';
+      progress.style.display = 'visible';
+    } else {
+      installer.style.display = 'visible';
+      progress.style.display = 'none';
+    }
+  }
+
+  function install_plugin() {
+    chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn', set_installer_visibility);
+  }
+
+  set_installer_visibility();
