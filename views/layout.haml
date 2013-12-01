@@ -3,11 +3,10 @@
   %head
     %meta{'name' => "viewport", 'content' => "width=device-width, initial-scale=1.0"}
     %title
+      - if @title.nil?
+        = request.path_info[1..-1].capitalize
 
-      - if @page_title.nil?
-        - @page_title = request.path_info[1..-1].capitalize
-
-      = @page_title
+      = @title
       \-
       = settings.project_name
 
@@ -55,9 +54,10 @@
                 %i(class='loginbox-icon fa fa-lock icon-large')
     .container.text-center.content-container
       .content
-        .page-header
-          %h1
-            = @page_title
+        - if @title
+          .page-header
+            %h1
+              = @title
         = haml :alert
         = yield
     = haml :footer

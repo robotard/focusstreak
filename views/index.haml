@@ -1,39 +1,5 @@
-%script(src='/js/bowser.min.js')
 
-%h2
-  Graphs n stuff go here.
+%h3 Focus Streak helps you reclaim lost time and focus on things that matter to you.
 
 %hr
-
-%h2
-  %div{:id => 'installer_title'}
-
-%h3
-  %div{:id => 'installer_content'}
-
-:javascript
-  function  chrome() {
-    title.innerHTML = "Hi Chrome user!";
-    content.innerHTML = "Install me, maybe?";
-  }
-
-  function firefox() {
-    title.innerHTML = "Focus Streak <i class='fa fa-heart'></i> Firefox";
-    content.innerHTML = "We are working on the Firefox plugin. Get notified?";
-  }
-
-  function other() {
-    title.innerHTML = "";
-    content.innerHTML = "...but your browser isn't supported :(";
-  }
-
-  var title = document.getElementById('installer_title');
-  var content = document.getElementById('installer_content');
-
-  if (bowser.chrome) {
-    chrome();
-  } else if (bowser.firefox) {
-    firefox();
-  } else {
-    other();
-  }
+= haml :install_app

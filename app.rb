@@ -91,7 +91,6 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/beta' do
-    @page_title = 'Home'
     if logged_in?
       redirect '/me'
     else
@@ -100,12 +99,13 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/tos' do
-      @page_title = 'Terms & Privacy'
+      @title = 'Terms & Privacy'
       haml :tos
   end
 
 
   get '/login' do
+    @title = 'Login'
     if logged_in?
       redirect '/me'
     else
@@ -132,7 +132,7 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/forgot_password' do
-    @page_title = "Forgot Password"
+    @title = "Forgot Password"
     haml :forgot_password
   end
 
@@ -159,7 +159,7 @@ class Focusstreak < Sinatra::Base
                  "Password Reset",
                  "You may reset your password here: http://#{request.host}/reset_password/#{secret}")
 
-      @page_title = "Login"
+      @title = "Login"
       flash[:notice] = "Check your email! Instructions have been sent to #{user.email}"
       redirect '/'
     end
@@ -170,7 +170,7 @@ class Focusstreak < Sinatra::Base
       flash.now[:error] = "Recovery code '#{h(params[:secret])}' has expired or does not exist"
       redirect '/'
     else
-      @page_title = "Reset Password"
+      @title = "Reset Password"
       haml :reset_password
     end
   end
@@ -201,6 +201,7 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/signup' do
+    @title = "Sign Up"
     if logged_in?
       redirect '/'
     end
@@ -231,7 +232,7 @@ class Focusstreak < Sinatra::Base
 
   get '/delete_account' do
     login_required
-    @page_title = "Delete Account"
+    @title = "Delete Account"
     haml :delete_account
   end
 

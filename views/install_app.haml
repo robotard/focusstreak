@@ -1,37 +1,44 @@
-%div{:id => 'installer'}
-  %a{:onclick => 'install_plugin()', :href => '#'}
-    %h3
-      Click to install our free Google Chrome™ extension.
-      %br
-    %img{:src => '/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'}
-%div{:id => 'progress'}
-  %h3
-    %font{:color => 'green'}
-      %i{:class => 'fa fa-check'}
-      Extension installed!
+%script(src='/js/bowser.min.js')
 
-%br
-%br
+%h3
+  %div{:id => 'installer_title'}
 
-%h4
-  Your personalized data will appear on this page once you've set up the extension and logged your first streak.
+%h3
+  %div{:id => 'installer_content'}
 
 :javascript
+  function  chrome() {
+    title.innerHTML = "<a href='#' onclick='install_plugin()'>Click to install our free Google Chrome™ extension.</a>";
+    content.innerHTML = "<a href='#' onclick='install_plugin()'><img src='/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'></a>";
+  }
 
-  function set_installer_visibility() {
-    var installer = document.getElementById('installer');
-    var progress = document.getElementById('progress');
-    if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
-      installer.style.display = 'none';
-      progress.style.display = 'visible';
+  function firefox() {
+    title.innerHTML = "Focus Streak <i class='fa fa-heart'></i> Firefox";
+    content.innerHTML = "We are working on the Firefox plugin. Get notified?";
+  }
+
+  function other() {
+    title.innerHTML = "";
+    content.innerHTML = "...but your browser isn't supported :(";
+  }
+
+  var title = document.getElementById('installer_title');
+  var content = document.getElementById('installer_content');
+
+  if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
+    title.innerHTML = "<font color='green'><i class='fa fa-check'/>Extension Installed</font>";
+  } else {
+    if (bowser.chrome) {
+      chrome();
+    } else if (bowser.firefox) {
+      firefox();
     } else {
-      installer.style.display = 'visible';
-      progress.style.display = 'none';
+      other();
     }
   }
 
   function install_plugin() {
-    chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn', set_installer_visibility);
+    chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn', location.reload);
   }
 
-  set_installer_visibility();
+%br
