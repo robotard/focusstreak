@@ -3,6 +3,24 @@ html, body {
   background-image: url('/images/blackorchid.png');
 }
 
+.footer {
+  text-align: center;
+  position: relative;
+  left: 50%;
+  bottom: 0;
+  width: 600px;
+  margin-top: 10px;
+  margin-left: -300px;
+}
+
+.social {
+  font-size: 30px;
+}
+
+a:hover {
+  text-decoration:none !important;
+}
+
 body {
   padding-top: 60px;
 }
@@ -17,15 +35,19 @@ body {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
+.navbar-brand a, .footer a {
+  color: #999999;
+}
+
 .navbar-brand a {
   position: relative;
   top: -20px;
-  color: #999999;
   font-size: 36px;
 }
 
-.navbar-brand a:hover,
-.navbar-brand a:focus {
+.navbar-brand a:hover, .footer a:hover,
+.navbar-brand a:focus, .footer a:focus {
   text-decoration: none;
   color: #ffffff
 }

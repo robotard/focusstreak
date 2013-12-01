@@ -99,6 +99,12 @@ class Focusstreak < Sinatra::Base
     end
   end
 
+  get '/tos' do
+      @page_title = 'Terms & Privacy'
+      haml :tos
+  end
+
+
   get '/login' do
     if logged_in?
       redirect '/me'
