@@ -2,9 +2,13 @@
 
 %h3
   %div{:id => 'installer_title'}
+    Sorry.
 
 %h4
   %div{:id => 'installer_content'}
+    \...but your browser isn't supported yet.
+    %br
+    Visit this page using <a href="http://www.google.com/chrome">Google Chrome</a> on your Windows, Mac or Linux.
 
 :javascript
   function  chrome() {
@@ -17,11 +21,6 @@
     content.innerHTML = "Good news: We are working on the Firefox plugin. Bad news: It's not dont yet.";
   }
 
-  function other() {
-    title.innerHTML = "";
-    content.innerHTML = "...but your browser isn't supported :(";
-  }
-
   var title = document.getElementById('installer_title');
   var content = document.getElementById('installer_content');
 
@@ -32,13 +31,9 @@
       chrome();
     } else if (bowser.firefox) {
       firefox();
-    } else {
-      other();
     }
   }
 
   function install_plugin() {
     chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn', location.reload);
   }
-
-%br
