@@ -1,3 +1,35 @@
+        .margin-base-vertical {
+          margin: 40px 0;
+        }
+
+        .container-fluid{
+          height:100%;
+          display:table;
+          width: 100%;
+          padding: 0;
+        }
+        @media (max-width: 768px) {
+          .social {
+            padding-top: 70px;
+          }
+        }
+
+        .row-fluid {
+          height: 100%; display:table-cell;
+          vertical-align: middle;
+        }
+
+        .centering {
+          float:none;
+          margin:0 auto;
+          width: 60%;
+          min-width: 560px;
+        }
+
+    .chart {
+          width: 40%;
+        }
+
 html, body {
   background-color: #eee;
   background-image: url('/images/blackorchid.png');

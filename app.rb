@@ -91,6 +91,7 @@ class Focusstreak < Sinatra::Base
   end
 
   get '/beta' do
+    @title = 'We want you to focus'
     if logged_in?
       redirect '/me'
     else

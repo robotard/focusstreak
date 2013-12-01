@@ -3,18 +3,18 @@
 %h3
   %div{:id => 'installer_title'}
 
-%h3
+%h4
   %div{:id => 'installer_content'}
 
 :javascript
   function  chrome() {
-    title.innerHTML = "<a href='#' onclick='install_plugin()'>Click to install our free Google Chrome™ extension.</a>";
+    title.innerHTML = "<a href='#' onclick='install_plugin()'>Get started by clicking here to install our free extension.</a>";
     content.innerHTML = "<a href='#' onclick='install_plugin()'><img src='/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'></a>";
   }
 
   function firefox() {
     title.innerHTML = "Focus Streak <i class='fa fa-heart'></i> Firefox";
-    content.innerHTML = "We are working on the Firefox plugin. Get notified?";
+    content.innerHTML = "Good news: We are working on the Firefox plugin. Bad news: It's not dont yet.";
   }
 
   function other() {
