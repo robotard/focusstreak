@@ -11,7 +11,8 @@
     Visit this page using <a href="http://www.google.com/chrome">Google Chrome</a> on your Windows, Mac or Linux.
 
 :javascript
-  function  chrome() {
+  // Can't be called "chrome" because of the Chrome browser global object
+  function  _chrome() {
     title.innerHTML = "<a href='#' onclick='install_plugin()'>Get started by clicking here to install our free extension.</a>";
     content.innerHTML = "<a href='#' onclick='install_plugin()'><img src='/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'></a>";
   }
@@ -26,14 +27,15 @@
 
   if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
     title.innerHTML = "<font color='green'><i class='fa fa-check'/>Extension Installed</font>";
+    content.innerHTML = "<a href='/login'>Login</a> to continue.";
   } else {
     if (bowser.chrome) {
-      chrome();
+      _chrome();
     } else if (bowser.firefox) {
       firefox();
     }
   }
 
   function install_plugin() {
-    chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn', location.reload);
+    chrome.webstore.install('https://chrome.google.com/webstore/detail/mpifekaiabpalokkgbkeejmfofpohfdn');
   }
