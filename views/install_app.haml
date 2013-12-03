@@ -8,7 +8,7 @@
   %div{:id => 'installer_content'}
     \...but your browser isn't supported yet.
     %br
-    Visit this page using <a href="http://www.google.com/chrome">Google Chrome</a> on your Windows, Mac or Linux.
+    Visit this page using <a href="http://www.google.com/chrome">Google Chrome</a> on Windows, Mac or Linux.
 
 :javascript
   // Can't be called "chrome" because of the Chrome browser global object
@@ -29,7 +29,7 @@
     title.innerHTML = "<font color='green'><i class='fa fa-check'/>Extension Installed</font>";
     content.innerHTML = "<a href='/login'>Login</a> to continue.";
   } else {
-    if (bowser.chrome) {
+    if (bowser.chrome && !bowser.mobile) {
       _chrome();
     } else if (bowser.firefox) {
       firefox();

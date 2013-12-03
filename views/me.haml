@@ -1,5 +1,7 @@
 - if @no_apps_installed
   = haml :install_app
+  %h4
+    Your personalized data will appear on this page once you've set up the extension and logged your first streak.
 - else
   %h3
     - if @streaks.empty?
@@ -13,5 +15,4 @@
 
   - for streak in @streaks
     = streak
-%h4
-  Your personalized data will appear on this page once you've set up the extension and logged your first streak.
+
