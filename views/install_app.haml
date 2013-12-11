@@ -10,20 +10,38 @@
     %br
     Visit this page using <a href="http://www.google.com/chrome">Google Chrome</a> on Windows, Mac or Linux.
 
+%h4
+  %div{:id => 'list_form'}
+    %form{:action => "/waiting_list", :method => "post"}
+
+      = Rack::Csrf.csrf_tag(env)
+
+      .input-group
+        %span.input-group-addon
+          %i(class='fa fa-envelope')
+        %input.form-control{:id => "email", :name => "email", :placeholder => "E-Mail", :type => 'email'}
+      %br
+
+      %button{:class => 'btn btn-info', :type => "submit"}
+        Let me know when it's ready.
+        %i(class='loginbox-icon fa fa-envelope icon-large')
+
 :javascript
   // Can't be called "chrome" because of the Chrome browser global object
   function  _chrome() {
     title.innerHTML = "<a href='#' onclick='install_plugin()'>Get started by clicking here to install our free extension.</a>";
     content.innerHTML = "<a href='#' onclick='install_plugin()'><img src='/images/3rdparty/ChromeWebStore_Badge_v2_496x150.png'></a>";
+    list_form.innerHTML = "";
   }
 
   function firefox() {
     title.innerHTML = "Focus Streak <i class='fa fa-heart'></i> Firefox";
-    content.innerHTML = "Good news: We are working on the Firefox plugin. Bad news: It's not dont yet.";
+    content.innerHTML = "Good news: We are working on the Firefox plugin. Bad news: It's not ready yet.";
   }
 
   var title = document.getElementById('installer_title');
   var content = document.getElementById('installer_content');
+  var list_form = document.getElementById('list_form');
 
   if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
     title.innerHTML = "<font color='green'><i class='fa fa-check'/>Extension Installed</font>";

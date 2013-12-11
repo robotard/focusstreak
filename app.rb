@@ -9,6 +9,16 @@ class DeleteReason
   timestamps!
 end
 
+class EmailSubscription
+  include MongoMapper::Document
+
+  key :email, String, :required => true
+  key :list, String, :required => true
+  key :info, String, :required => true
+
+  timestamps!
+end
+
 class MmUser
   include MongoMapper::Document
   many :streaks
@@ -135,6 +145,19 @@ class Focusstreak < Sinatra::Base
   get '/forgot_password' do
     @title = "Forgot Password"
     haml :forgot_password
+  end
+
+  post '/waiting_list' do
+    if not EmailVeracity::Address.new(params[:email]).valid?
+      flash[:error] = "Sorry, but that's not a valid email address"
+    else
+      EmailSubscription.create(:email => params[:email],
+                               :list => "notify_app_ready",
+                               :info => request.user_agent)
+      flash[:info] = "Thanks - we'll let you know when Focus Streak is ready for you."
+    end
+
+    redirect back
   end
 
   def send_email(to, subject, body)

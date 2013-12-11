@@ -42,6 +42,7 @@ GEM
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
     dotenv (0.9.0)
+    email_veracity (0.6.0)
     encrypted_cookie (0.0.4)
     eventmachine (1.0.3)
     haml (4.0.3)
@@ -118,6 +119,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   dotenv
+  email_veracity
   encrypted_cookie
   haml
   iconv
