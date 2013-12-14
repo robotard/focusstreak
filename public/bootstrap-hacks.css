@@ -35,6 +35,10 @@ html, body {
   background-image: url('/images/blackorchid.png');
 }
 
+.delete_link {
+  color: red;
+}
+
 .footer {
   text-align: center;
   position: relative;

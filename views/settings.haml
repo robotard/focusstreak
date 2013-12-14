@@ -16,7 +16,7 @@
         %i(class='fa fa-key')
       %input.form-control{:placeholder => "Confirm New Password", :id => "user_password_confirmation", :name => "user[password_confirmation]", :size => 30, :type => "password" }
 
-  %hr
+  %br
 
   %span.alert.alert-warning{:style => 'display: inline-block; text-align:center;'}
     .input-group
@@ -28,8 +28,9 @@
       Apply Changes
       %i(class='loginbox-icon fa fa-wrench icon-large')
 
+%hr
 .pull-right
-  %button{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal', :class => 'btn-danger btn'}
+  %a.delete_link{:value => "Delete account", :href => "#confirm_delete", 'data-toggle' => 'modal'}
     Delete Account
     %i(class='loginbox-icon fa fa-trash-o icon-large')
 
