@@ -45,7 +45,8 @@
 
   if (document.getElementById("FOCUSSTREAK_INSTALLED")) {
     title.innerHTML = "<font color='green'><i class='fa fa-check'/>Extension Installed</font>";
-    content.innerHTML = "<a href='/login'>Login</a> to continue.";
+    content.innerHTML = "";
+    list_form.innerHTML = "";
   } else {
     if (bowser.chrome && !bowser.mobile) {
       _chrome();
