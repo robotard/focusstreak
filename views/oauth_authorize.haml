@@ -1,16 +1,33 @@
 %h2
-  = "The application #{oauth.client.display_name} #{oauth.client.link}"
-  = "is requesting to #{oauth.scope.to_sentence}  your account."
+  - if oauth.client.image_url
+    %img{:src => oauth.client.image_url}
 
-%form{:action => "/oauth/grant", :method => "post"}
-  = Rack::Csrf.csrf_tag(env)
-  %button
-    Grant
-  %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
+  The application:
+  %br
+  %a{:href => oauth.client.link}
+    "#{oauth.client.display_name}"
+  %br
+  = "would like to use your Focus Streak account."
 
-%form{:action => "/oauth/deny", :method => "post"}
-  = Rack::Csrf.csrf_tag(env)
-  %button
-    Deny
-  %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
+%br
+
+%div{:class => 'container'}
+  %div{:class => 'row'}
+
+    %div{:class => 'col-md-4 col-md-offset-2'}
+      %form{:action => "/oauth/deny", :method => "post"}
+        = Rack::Csrf.csrf_tag(env)
+        %button{:class => "btn btn-danger btn-lg"}
+          No, don't Allow
+          %i(class='loginbox-icon fa fa-thumbs-down icon-large')
+        %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
+
+
+    %div{:class => 'col-md-4'}
+      %form{:action => "/oauth/grant", :method => "post"}
+        = Rack::Csrf.csrf_tag(env)
+        %button{:class => "btn btn-success btn-lg"}
+          Yes, that's fine
+          %i(class='loginbox-icon fa fa-thumbs-up icon-large')
+        %input{:type => 'hidden', :name => 'authorization', :value => oauth.authorization}
 
